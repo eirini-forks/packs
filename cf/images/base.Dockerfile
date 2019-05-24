@@ -1,5 +1,5 @@
-ARG stack
-ARG go_version=1.9.6
+ARG stack=cflinuxfs2
+ARG go_version=1.12.5-stretch
 FROM golang:$go_version as lifecycle
 ARG diego_version=2.7.0
 ARG diego_repo=github.com/cloudfoundry/diego-release
@@ -20,7 +20,7 @@ RUN git clone --single-branch "https://${diego_repo}" . && \
     src/gopkg.in/yaml.v2
 RUN GOPATH=/diego CGO_ENABLED=0 go install -a -installsuffix static "${bal_repo}/..."
 
-FROM golang:1.11.0 as packs
+FROM golang:1.12.5-stretch as packs
 ARG packs_repo=github.com/buildpack/packs
 
 COPY . "src/${packs_repo}"

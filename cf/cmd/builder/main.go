@@ -135,7 +135,8 @@ func stage() error {
 		Credential: &syscall.Credential{Uid: uid, Gid: gid},
 	}
 	if err := cmd.Run(); err != nil {
-		return packs.FailErrCode(err, packs.CodeFailedBuild, "build")
+		exitCode := cmd.ProcessState.ExitCode()
+		return packs.FailErrCode(err, exitCode, "build")
 	}
 	if err := setKeyJSON(metadataPath, "pack_metadata", cf.PackMetadata{
 		App: packs.AppMetadata{
